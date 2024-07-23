@@ -1,0 +1,20 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "Point-Cloud",
+	"dockerComposeFile": ["../Docker/docker-compose.point-cloud.yml"],
+	"workspaceFolder": "/app/project",
+	"service": "service.point-cloud",
+	
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"python.terminal.activateEnvInCurrentTerminal": true,
+				"python.defaultInterpreterPath": "/app/Env/bin/python"
+			},
+			"extensions": [
+				"ms-python.python"
+			]
+		}
+	}
+}

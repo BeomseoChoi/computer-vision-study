@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  service.point-cloud:
+    container_name: point-cloud
+    build:
+      context: ../ # Project Directory. The current path in a Dockerfile will be set to the context, NOT the directory where Dockerfile is.
+      dockerfile: Docker/Point-Cloud/Dockerfile.point-cloud # Relative to the context
+    working_dir: /app/project
+    volumes:
+      - ../:/app/project
+      
+      # for x11 in docker
+      # - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/root/.Xauthority:rw
+    network_mode: "host"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+    runtime: nvidia
+
+    tty: true
