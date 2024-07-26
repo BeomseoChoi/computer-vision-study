@@ -5,10 +5,22 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python Debugger: main.py",
+            "name": "Python Debugger: pointnet.py",
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/PointNet/Src/main.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": true
+        },
+        
+        {
+            "name": "Python Debugger: unet.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/UNet/Src/main.py",
             "console": "integratedTerminal",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"

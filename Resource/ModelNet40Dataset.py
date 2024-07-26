@@ -20,8 +20,8 @@ class ModelNet40Dataset(Dataset):
         return len(self.point_cloud)
     
     def __getitem__(self, idx):
-        x = torch.FloatTensor(self.point_cloud[idx].points)
-        y = torch.FloatTensor(self.label[idx])
+        x = torch.FloatTensor(self.point_cloud[idx].points) # (n_points, 3)
+        y = torch.FloatTensor(self.label[idx]) # (label, )
         return x,y
 
     def load_data(self):
@@ -45,7 +45,7 @@ class ModelNet40Dataset(Dataset):
                 for file_path in train_dir.iterdir():
                     mesh = o3d.io.read_triangle_mesh(file_path.absolute().__str__())
                     if mesh.is_empty():
-                        ensure_off_newline(file_path)
+                        self.ensure_off_newline(file_path)
 
                     pcd = mesh.sample_points_uniformly(number_of_points=self.n_sample)
                     self.point_cloud.append(pcd)
@@ -54,7 +54,7 @@ class ModelNet40Dataset(Dataset):
                 for file_path in test_dir.iterdir():
                     mesh = o3d.io.read_triangle_mesh(file_path.absolute().__str__())
                     if mesh.is_empty():
-                        ensure_off_newline(file_path)
+                        self.ensure_off_newline(file_path)
 
                     pcd = mesh.sample_points_uniformly(number_of_points=self.n_sample)
                     self.point_cloud.append(pcd)

@@ -209,6 +209,6 @@ pip-selfcheck.json
 ##############################
 # Project setting
 ##############################
-Resource/Model/
-Resource/Sample/
-Resource/cleanData.xlsx
+Resource/*/
+Resource/*.zip
+*/Log/
