@@ -212,3 +212,4 @@ pip-selfcheck.json
 Resource/*/
 Resource/*.zip
 */Log/
+Etc/
