@@ -216,3 +216,4 @@ Resource/*.tgz
 */Model/
 */Log/
 Etc/
+*.properties
