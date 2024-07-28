@@ -23,6 +23,7 @@ Flask==3.0.3
 fonttools==4.53.1
 fsspec==2024.2.0
 grpcio==1.65.1
+h5py==3.11.0
 idna==3.7
 importlib_metadata==8.0.0
 ipython==8.26.0

@@ -22,3 +22,4 @@ Download and Put the resources you need in the `Resource` directory.
 - [ModelNet10/40](https://modelnet.cs.princeton.edu/)
 - [SUNRGBD](https://rgbd.cs.princeton.edu/challenge.html)
 - [Pix2Pix](https://www.kaggle.com/datasets/vikramtiwari/pix2pix-dataset?resource=download)
+- [Make3D](http://make3d.cs.cornell.edu/data.html#make3d)

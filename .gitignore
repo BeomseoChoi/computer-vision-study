@@ -211,5 +211,8 @@ pip-selfcheck.json
 ##############################
 Resource/*/
 Resource/*.zip
+Resource/*.tar.gz
+Resource/*.tgz
+*/Model/
 */Log/
 Etc/

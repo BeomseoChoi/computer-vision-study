@@ -26,6 +26,29 @@
                 "PYTHONPATH": "${workspaceFolder}"
             },
             "justMyCode": true
+        },
+        
+        {
+            "name": "Python Debugger: main_depth_estimation.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/UNet/Src/main_depth_estimation.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": true
+        },
+        {
+            "name": "Python Debugger: main_depth_estimation_pred.py",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/UNet/Src/main_depth_estimation_pred.py",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "justMyCode": true
         }
     ]
 }

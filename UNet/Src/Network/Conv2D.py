@@ -36,7 +36,7 @@ class Conv2D(nn.Module):
         self.activation_funcs = []
         for _ in range(n_layer):
             self.activation_funcs.append(get_activation_func(activation_func))
-
+            
         self.seq = nn.Sequential()
         for i in range(n_layer):
             self.seq.append(self.conv2ds[i])
@@ -46,10 +46,5 @@ class Conv2D(nn.Module):
 
     def forward(self, x : torch.Tensor):
         x = self.seq(x)
-        # for i in range(self.n_layer):
-        #     x = self.conv2ds[i](x)
-        #     if self.on_batch_norm:
-        #         x = self.batch_norms[i](x)
-        #     x = self.activation_funcs[i](x)
         
         return x
