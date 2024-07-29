@@ -82,26 +82,21 @@ class NYUv2Dataset(Dataset):
         filepaths_x : list[str] = sorted(glob.glob((self.root_dir / f"{dir_name}_{self.dataset_x}").__str__() + "/*.png"))
         filepaths_y : list[str] = sorted(glob.glob((self.root_dir / f"{dir_name}_{self.dataset_y}").__str__() + "/*.png"))
         for filepath_x, filepath_y in zip(filepaths_x, filepaths_y):
-            # x : torch.Tensor = torch.Tensor(np.array(Image.open(filepath_x)))
-            # y : torch.Tensor = torch.Tensor(np.array(Image.open(filepath_y)))
+            """
+            https://pytorch.org/vision/main/generated/torchvision.transforms.ToTensor.html
+            transforms.ToTensor scales RGB(or np.uint8) to [0, 1].
+            BUT, the depth image we use will not scaled.
+            """
             x = Image.open(filepath_x)
             y = Image.open(filepath_y)
             x = self.transform_x(x)
             y = self.transform_y(y)
 
-            if self.dataset_x == "rgb":
-                x = x / 255.
-            elif self.dataset_x == "depth":
+            if self.dataset_x == "depth":
                 x = x / 65000
-            else:
-                assert False
 
-            if self.dataset_y == "rgb":
-                y = y / 255.
-            elif self.dataset_y == "depth":
+            if self.dataset_y == "depth":
                 y = y / 65000
-            else:
-                assert False
 
             self.x.append(x)
             self.y.append(y)

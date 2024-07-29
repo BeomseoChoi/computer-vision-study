@@ -12,15 +12,12 @@ class PaddedUNet_depth_estimation(nn.Module):
         # Downsampling
         self.conv2d_down_0 : Conv2D = Conv2D(self.n_in_channel, 64, 3, 1, "same", 3)
         self.max_pool_0 : nn.MaxPool2d = nn.MaxPool2d(2, 2)
-        self.dropout_0 : nn.Dropout2d = nn.Dropout(0.4)
 
         self.conv2d_down_1 : Conv2D = Conv2D(64, 128, 3, 1, "same", 3)
         self.max_pool_1 : nn.MaxPool2d = nn.MaxPool2d(2, 2)
-        self.dropout_1 : nn.Dropout2d = nn.Dropout(0.4)
 
         self.conv2d_down_2 : Conv2D = Conv2D(128, 256, 3, 1, "same", 3)
         self.max_pool_2 : nn.MaxPool2d = nn.MaxPool2d(2, 2)
-        self.dropout_2 : nn.Dropout2d = nn.Dropout(0.4)
 
         self.conv2d_down_3 : Conv2D = Conv2D(256, 512, 3, 1, "same", 3)
         self.max_pool_3 : nn.MaxPool2d = nn.MaxPool2d(2, 2)
@@ -50,33 +47,33 @@ class PaddedUNet_depth_estimation(nn.Module):
         # Downsampling
         out_conv2d_0 = self.conv2d_down_0(x)
         x = self.max_pool_0(out_conv2d_0)
-        x = self.dropout_0(x)
+        # x = self.dropout_0(x)
 
         out_conv2d_1 = self.conv2d_down_1(x)
         x = self.max_pool_1(out_conv2d_1)
-        x = self.dropout_1(x)
+        # x = self.dropout_1(x)
 
         out_conv2d_2 = self.conv2d_down_2(x)
         x = self.max_pool_2(out_conv2d_2)
-        x = self.dropout_2(x)
+        # x = self.dropout_2(x)
         
         out_conv2d_3 = self.conv2d_down_3(x)
         x = self.max_pool_3(out_conv2d_3)
-        x = self.dropout_3(x)
+        # x = self.dropout_3(x)
         
         x = self.conv2d_down_4(x)
-        x = self.dropout_4(x)
+        # x = self.dropout_4(x)
 
         # Upsampling
         x = self.up_sample_0(x)
         x = torch.concat([x, out_conv2d_3], dim=1)
         x = self.conv2d_up_0(x)
-        x = self.dropout_5(x)
+        # x = self.dropout_5(x)
 
         x = self.up_sample_1(x)
         x = torch.concat([x, out_conv2d_2], dim=1)
         x = self.conv2d_up_1(x)
-        x = self.dropout_6(x)
+        # x = self.dropout_6(x)
 
         x = self.up_sample_2(x)
         x = torch.concat([x, out_conv2d_1], dim=1)
