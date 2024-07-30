@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from PointNet.Src.Network.TNet import TNet
+from Network.Src.PointNet.TNet import TNet
 
 class PointNet(nn.Module):
     def __init__(self, input_dim : int, n_class : int):

@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.distributed as dist
-from Common.Src.device import DeviceWrapper
+from Common.Src.DeviceWrapper import DeviceWrapper
 
 def test(model, device_wrapper, *args, **kwargs) -> tuple[float, float]:
 

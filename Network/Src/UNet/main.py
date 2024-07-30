@@ -1,7 +1,7 @@
 # Torch
 import torch
 from datetime import datetime
-from Common.Src.device import print_device_info
+from Common.Src.DeviceWrapper import print_device_info
 from Common.Src.directory import TensorBoardLogger
 from Common.Src.directory import model_save
 

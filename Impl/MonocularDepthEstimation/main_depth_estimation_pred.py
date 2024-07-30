@@ -8,12 +8,12 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch
 from torchvision import transforms
 from datetime import datetime
-from Common.Src.device import DeviceWrapper
+from Common.Src.DeviceWrapper import DeviceWrapper
 from Common.Src.directory import TensorBoardLogger
 from Common.Src.directory import model_save
 
 # Network
-from UNet.Src.Network.PaddedUNet_depth_estimation import PaddedUNet_depth_estimation
+from Impl.MonocularDepthEstimation.Src.Network.PaddedUNet_depth_estimation import PaddedUNet_depth_estimation
 from UNet.Src.main_depth_estimation import DataLoaderWrapper
 from UNet.Src.train import train
 from UNet.Src.test import test

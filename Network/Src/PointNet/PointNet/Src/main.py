@@ -1,6 +1,6 @@
 # Torch
 import torch
-from Common.Src.device import print_device_info
+from Common.Src.DeviceWrapper import print_device_info
 
 # Network
 from PointNet.Src.Network.PointNet import PointNet
