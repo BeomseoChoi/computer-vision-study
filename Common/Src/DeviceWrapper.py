@@ -2,9 +2,24 @@ import torch
 
 class DeviceWrapper():
     def __init__(self, device, n_device : int, mode : str):
-        self.device = device
+        self.__device = device
         self.n_device : int = n_device
-        self.mode : str = mode
+        self.__mode : str = mode
+        
+    def get(self) -> torch.device:
+        return self.__device
+    
+    def get_mode(self) -> str:
+        return self.__mode
+
+    def is_cpu_mode(self) -> bool:
+        return self.__mode == "cpu"
+    
+    def is_single_gpu_mode(self) -> bool:
+        return self.__mode == "single-gpu"
+
+    def is_multi_gpu_mode(self) -> bool:
+        return self.__mode == "multi-gpu"
 
     @staticmethod
     def is_valid_device_mode(mode : str):
@@ -15,7 +30,7 @@ class DeviceWrapper():
         if not DeviceWrapper.is_valid_device_mode(mode) : raise RuntimeError(f"Invalid mode. Got {mode}.")
 
     @staticmethod
-    def get_device_mode() -> str:
+    def get_opt_device_mode() -> str:
         """
         https://discuss.pytorch.org/t/single-machine-single-gpu-distributed-best-practices/169243
         """

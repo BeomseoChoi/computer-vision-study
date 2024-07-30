@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-from Network.Src.UNet import Conv2D
+from Network.Src.UNet.Conv2D import Conv2D
 
 class PaddedUNet_depth_estimation(nn.Module):
     def __init__(self, n_in_channel, n_out_channel):

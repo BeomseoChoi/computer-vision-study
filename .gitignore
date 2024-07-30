@@ -209,11 +209,11 @@ pip-selfcheck.json
 ##############################
 # Project setting
 ##############################
-Resource/*/
+Resource/Data/
 Resource/*.zip
 Resource/*.tar.gz
 Resource/*.tgz
-*/Model/
-*/Log/
+Impl/*/Model/
+Impl/*/Log/
 Etc/
 *.properties

@@ -13,7 +13,6 @@ class TensorBoardLogger():
     def __del__(self):
         self.writer.flush()
         self.writer.close()
-        print("deleted")
         
 def model_save(net : nn.Module, model_dir : str, model_filename : str):
     model_dir : Path = Path(model_dir)

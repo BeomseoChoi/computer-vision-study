@@ -1,6 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.distributed as dist
+from Common.Src.DeviceWrapper import DeviceWrapper
+from Common.Src.DataLoaderWrapper import DataLoaderWrapper
 
 def loss_ssim(pred : torch.Tensor, y : torch.Tensor):
     import pytorch_ssim
@@ -60,3 +63,22 @@ class SSIM(nn.Module):
 
         # Loss function
         return torch.clamp((1 - SSIM_n / SSIM_d) / 2, 0, 1)
+
+def calc_avg_loss_from_sum(sum_loss : float, dataloader_wrapper : DataLoaderWrapper, device_wrapper : DeviceWrapper):
+    if device_wrapper.is_multi_gpu_mode():
+        dist.barrier()
+
+        # sum of losses
+        sum_local_loss_tensor = torch.tensor(sum_loss).to(device_wrapper.get())
+        dist.reduce(sum_local_loss_tensor, dst=0, op=dist.ReduceOp.AVG) # TODO: check what AVG does.
+
+        # sum of len of dataloader
+        n_mini_batch_tensor = torch.tensor([len(dataloader_wrapper)]).to(device_wrapper.get())
+        dist.reduce(n_mini_batch_tensor, dst=0, op=dist.ReduceOp.SUM)
+
+        global_loss = sum_local_loss_tensor / n_mini_batch_tensor
+        global_loss = global_loss.item()
+    else:
+        global_loss = sum_loss / len(dataloader_wrapper)
+        
+    return global_loss
