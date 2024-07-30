@@ -1,7 +1,6 @@
 import torch
 from torch.nn.parallel import DistributedDataParallel as DDP
 from Common.Src.DeviceWrapper import DeviceWrapper
-from pathlib import Path
 
 class NetworkWrapper():
     def __init__(self, net, device_wrapper : DeviceWrapper):

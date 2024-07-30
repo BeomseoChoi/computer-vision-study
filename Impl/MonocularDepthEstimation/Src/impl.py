@@ -1,9 +1,9 @@
 # Torch
 import torch
 import torch.nn as nn
-import torch.distributed
 from torchvision import transforms
 from Common.Src.DeviceWrapper import DeviceWrapper
+from Common.Src.Logger import Logger
 import Loss.Src.basic as basic_loss
 import logging
 
@@ -20,7 +20,6 @@ from pathlib import Path
 class MonocularDepthEstimationImpl(BaseImpl):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        
         self.device_wrapper :  DeviceWrapper = self.get_device_wrapper()
         self.network_wrapper : NetworkWrapper = self.wrap_network(PaddedUNet_depth_estimation(3, 1))
         
@@ -34,6 +33,7 @@ class MonocularDepthEstimationImpl(BaseImpl):
         self.dataloader_training_wrapper = self.wrap_training_dataloader(self.dataset_training, self.n_batch_per_device)
         self.dataloader_test_wrapper = self.wrap_test_dataloader(self.dataset_test, self.n_batch_per_device)
 
+        self.logger : Logger = Logger(self.device_wrapper)
         self.log : str = ""
 
     def train(self, *args, **kwargs) -> None:
@@ -52,7 +52,7 @@ class MonocularDepthEstimationImpl(BaseImpl):
 
         epoch : int = kwargs["epoch"]
         avg_global_loss = basic_loss.calc_avg_loss_from_sum(sum_local_loss, self.dataloader_training_wrapper, self.device_wrapper)
-        logging.info(f"[LOG] Epoch : {epoch + 1}, Train loss : {avg_global_loss:.08f}")
+        self.log = f"[LOG] Epoch : {epoch + 1}, Train loss : {avg_global_loss:.08f}"
 
     def test(self, *args, **kwargs) -> None:
         sum_local_loss : float = 0.0
@@ -67,7 +67,10 @@ class MonocularDepthEstimationImpl(BaseImpl):
         
         epoch : int = kwargs["epoch"]
         avg_global_loss = basic_loss.calc_avg_loss_from_sum(sum_local_loss, self.dataloader_training_wrapper, self.device_wrapper)
-        logging.info(f", Test loss : {avg_global_loss:.08f}\n")
+        self.log += f", Test loss : {avg_global_loss:.08f}"
+
+    def end_epoch(self, *args, **kwargs) -> None:
+         self.logger.info(self.log)
 
     def check_point(self, *args, **kwargs) -> tuple[Path, str, dict]:
             epoch : int = kwargs["epoch"] + 1

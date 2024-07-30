@@ -1,6 +1,6 @@
 # Torch
 import torch
-import torch.distributed
+import torch.distributed as dist
 from Common.Src.DeviceWrapper import DeviceWrapper
 from datetime import datetime
 
@@ -43,6 +43,7 @@ def main_worker(device, mode, n_device, datetime_now):
                     model_dir = model_dir / datetime_now
                     model_dir.mkdir(parents=True, exist_ok=True)
                     torch.save(model_dict, model_dir / model_filename)
+                dist.barrier()
             else:
                 model_dir, model_filename, model_dict = impl.check_point(epoch = epoch, n_epoch = n_epoch)
                 model_dir = model_dir / datetime_now
