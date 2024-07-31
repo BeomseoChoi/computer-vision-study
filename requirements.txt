@@ -15,6 +15,7 @@ dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-table==5.0.0
 decorator==5.1.1
+et-xmlfile==1.1.0
 exceptiongroup==1.2.2
 executing==2.0.1
 fastjsonschema==2.20.0
@@ -70,6 +71,7 @@ nvidia-nvjitlink-cu12==12.5.82
 nvidia-nvtx-cu11==11.8.86
 nvidia-nvtx-cu12==12.1.105
 open3d==0.18.0
+openpyxl==3.1.5
 packaging==24.1
 pandas==2.2.2
 parso==0.8.4

@@ -42,7 +42,7 @@ class MonocularDepthEstimationImpl(BaseImpl):
     
     def initialize(self, *args, **kwargs) -> None:
         self.device_wrapper = self.get_device_wrapper()
-        self.logger = Logger(self.device_wrapper)
+        self.logger = Logger(self.device_wrapper, *args, **kwargs)
 
         if kwargs["args"].type == "train":
             self.network_wrapper = self.wrap_network(PaddedUNet_depth_estimation(3, 1))
@@ -75,6 +75,7 @@ class MonocularDepthEstimationImpl(BaseImpl):
         epoch : int = kwargs["epoch"]
         avg_global_loss = basic_loss.calc_avg_loss_from_sum(sum_local_loss, self.dataloader_training_wrapper, self.device_wrapper)
         self.log = f"Epoch : {epoch + 1}, Train loss : {avg_global_loss:.08f}"
+        self.logger.append_to_excel("train", "loss", avg_global_loss)
 
     def validate(self, *args, **kwargs) -> None:
         sum_local_loss : float = 0.0
@@ -89,6 +90,7 @@ class MonocularDepthEstimationImpl(BaseImpl):
         
         avg_global_loss = basic_loss.calc_avg_loss_from_sum(sum_local_loss, self.dataloader_validation_wrapper, self.device_wrapper)
         self.log += f", Validation loss : {avg_global_loss:.08f}"
+        self.logger.append_to_excel("validation", "loss", avg_global_loss)
 
     def end_epoch(self, *args, **kwargs) -> None:
          self.logger.info(self.log)
