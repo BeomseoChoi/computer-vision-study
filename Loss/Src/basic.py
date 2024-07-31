@@ -70,8 +70,8 @@ def calc_avg_loss_from_sum(sum_loss : float, dataloader_wrapper : DataLoaderWrap
 
         # sum of losses
         sum_local_loss_tensor = torch.tensor(sum_loss).to(device_wrapper.get())
-        dist.reduce(sum_local_loss_tensor, dst=0, op=dist.ReduceOp.AVG) # TODO: check what AVG does.
-
+        dist.reduce(sum_local_loss_tensor, dst=0, op=dist.ReduceOp.SUM)
+        
         # sum of len of dataloader
         n_mini_batch_tensor = torch.tensor([len(dataloader_wrapper)]).to(device_wrapper.get())
         dist.reduce(n_mini_batch_tensor, dst=0, op=dist.ReduceOp.SUM)

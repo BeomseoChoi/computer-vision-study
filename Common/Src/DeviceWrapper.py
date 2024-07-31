@@ -9,6 +9,9 @@ class DeviceWrapper():
     def get(self) -> torch.device:
         return self.__device
     
+    def is_main_device(self) -> bool:
+        return self.__device == 0 or self.__device == "cpu"
+    
     def get_mode(self) -> str:
         return self.__mode
 

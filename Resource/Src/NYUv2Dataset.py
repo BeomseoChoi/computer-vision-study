@@ -16,10 +16,12 @@ import tarfile
 import zipfile
 import requests
 import numpy as np
+import copy
 
 from PIL import Image
 from torch.utils.data import Dataset
 from torchvision.datasets.utils import download_url
+from sklearn.model_selection import train_test_split
 
 # Refactored code based on https://github.com/xapharius/pytorch-nyuv2
 class NYUv2Dataset(Dataset):
@@ -76,6 +78,19 @@ class NYUv2Dataset(Dataset):
             )
 
         self.load_data()
+    
+    def split(self, test_ratio : float, seed : int):
+        x_train, x_test, y_train, y_test = train_test_split(self.x, self.y, test_size=test_ratio, random_state=seed)
+        train_dataset : NYUv2Dataset = copy.deepcopy(self)
+        test_dataset : NYUv2Dataset = copy.deepcopy(self)
+
+        train_dataset.x = x_train
+        train_dataset.y = y_train
+        test_dataset.x = x_test
+        test_dataset.y = y_test
+
+        return train_dataset, test_dataset
+
 
     def load_data(self):
         dir_name : str = "train" if self.is_training else "test"
